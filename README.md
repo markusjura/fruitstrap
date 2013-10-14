@@ -1,31 +1,45 @@
 fruitstrap
 ==========
-Install and debug iPhone apps without using Xcode. Designed to work on unjailbroken devices.
+Install and debug iPhone apps without using Xcode 5. Designed to work on unjailbroken devices.
 
 ## Requirements
 
 * Mac OS X. Tested on Lion/Mountain Lion.
 * You need to have a valid iPhone development certificate installed (or at least a correctly signed iOS app).
-* Xcode must be installed, along with the SDK for your iOS version.
+* Xcode 5 with the lldb debugger must be installed, along with the SDK for your iOS version.
 
 ## Install
 
-* `make install_os` will compile and install fruitstrap to /usr/local/bin
+* `make install` will compile and install fruitstrap to /usr/local/bin
 
 ## Usage
 
-* `fruitstrap [-d/--debug] [-i/--id device_id] -b/--bundle <app> [-a/--args arguments] [-t/--timeout timeout(seconds)] [-u/--unbuffered] [-g/--gdbargs gdb_arguments]`
+```
+Usage: ./fruitstrap [OPTION]...
+    -d, --debug                  launch the app in GDB after installation
+    -i, --id <device_id>         the id of the device to connect to
+    -c, --detect                 only detect if the device is connected
+    -b, --bundle <bundle.app>    the path to the app bundle to be installed
+    -a, --args <args>            command line arguments to pass to the app when launching it
+    -t, --timeout <timeout>      number of seconds to wait for a device to be connected
+    -u, --unbuffered             don't buffer stdout
+    -g, --gdbargs <args>         extra arguments to pass to GDB when starting the debugger
+    -x, --gdbexec <file>         GDB commands script file
+    -n, --nostart                do not start the app automatically when debugging
+    -v, --verbose                enable verbose output
+```
 * Optional `-d` flag launches a remote GDB session after the app has been installed.
 * `<app>` must be an iPhone application bundle, *not* an IPA.
 * Optional device id, useful when you have more than one iPhone/iPad connected to your computer
-* `<arguments>` are passed as argv to the running app.
-* `<gdb_arguments>` are passed to gdb.
+* -a `<args>` are passed as argv to the running app.
+* -g `<args>` are passed to gdb.
+* `-c` exits with return status `SUCCESS` if device is found, `ERROR` if not.
 
 ## Demo
 
 * The included demo.app represents the minimum required to get code running on iOS.
-* `make install` will install demo.app to the device.
-* `make debug` will install demo.app and launch a GDB session.
+* `make install\_demo` will install demo.app to the device.
+* `make debug\_demo` will install demo.app and launch a GDB session.
 
 ## Notes
 
